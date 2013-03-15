@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
-int const BUFFSIZE = 32;
+int const BUFFSIZE = 89000;
 
 void Die(char *mess) { 
 	perror(mess); 
@@ -48,14 +48,18 @@ int main( int argc, char *argv[]){
        	// Receive the word back from the server 
         fprintf(stdout, "Received: ");
         
-	while (received < echolen) {
+	//while (received < echolen) {
+	int i= 0;
+	while ( i <= 100){
 		int bytes = 0;
-        	if ((bytes = recv(sock, buffer, BUFFSIZE-1, 0)) < 1) {
+        	/*if ((bytes = recv(sock, buffer, BUFFSIZE-1, 0)) < 1) {
                 	Die("Failed to receive bytes from server");
-              	}
+              	}*/
+		bytes = recv(sock, buffer, BUFFSIZE-1, 0);
         	received += bytes;
          	buffer[bytes] = '\0';        // Assure null terminated string 
          	fprintf(stdout, buffer);
+		i++;
         }
 	
 	fprintf(stdout, "\n");
